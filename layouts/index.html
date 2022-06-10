@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <h1>List template - {{ .Title }}</h1>
+
+  {{ .Content }}
+  
+  <h2>Posts</h2>
+  {{ range ( where .Site.RegularPages "Type" "blog" | first 3 ) }}
+    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+  {{ end }}
+
+  <h2>Publications</h2>
+  {{ range ( where .Site.RegularPages "Type" "publications" | first 3 ) }}
+    <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+  {{ end }}
+{{ end }}
