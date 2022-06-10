@@ -1,0 +1,45 @@
+{{ define "main" }}
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+
+    {{ $p := .Pages }}
+    {{ $conf := where $p "Params.categories" "intersect" (slice "Conference") }}
+    {{ $jour := where $p "Params.categories" "intersect" (slice "Journal") }}
+
+    {{ with $jour }}
+    <h2>Journal articles</h2>
+    Articles published in peer-reviewed journals and magazines.
+    <ul>
+        {{ range $jour }}
+        <li>
+            <a href="{{ .Permalink }}">
+                {{ with .Params.Citation }}
+                {{. | markdownify }}
+                {{else}}
+                {{ .Title }}</aside>
+                {{end}}
+            </a>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+
+    {{ with $conf }}
+    <h2>Conference papers</h2>
+    Papers published in peer-reviewed conference proceedings.
+    <ul>
+        {{ range $conf }}
+        <li>
+            <a href="{{ .Permalink }}">
+                {{ with .Params.Citation }}
+                {{. | markdownify }}
+                {{else}}
+                {{ .Title }}</aside>
+                {{end}}
+            </a>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+
+{{ end }}
